@@ -1,0 +1,21 @@
+=== Task 1: Login ===
+$ curl -X POST http://localhost:3000/auth/login -H "Content-Type: application/json" -d '{"email":"lowbare3@gmail.com","password":"Nasirtabira1"}'
+
+{"message":"OTP sent","loginSessionId":"hxvw7"}
+
+(Server console log: [OTP] Session hxvw7 generated. OTP: 853988)
+
+=== Task 2: Verify OTP ===
+$ curl -c cookies.txt -X POST http://localhost:3000/auth/verify-otp -H "Content-Type: application/json" -d '{"loginSessionId":"hxvw7","otp":"853988"}'
+
+{"message":"OTP verified","sessionId":"hxvw7"}
+
+=== Task 3: Get Token ===
+$ curl -b cookies.txt -X POST http://localhost:3000/auth/token
+
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxvd2JhcmUzQGdtYWlsLmNvbSIsInNlc3Npb25JZCI6Imh4dnc3IiwiaWF0IjoxNzcwOTU5MTgwLCJleHAiOjE3NzA5NjAwODB9.SfBfhlsvQbTBD8JLmeZpzar0ZzD6S0YrB3u9hE1i2EM","expires_in":900}
+
+=== Task 4: Access Protected Route ===
+$ curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imxvd2JhcmUzQGdtYWlsLmNvbSIsInNlc3Npb25JZCI6Imh4dnc3IiwiaWF0IjoxNzcwOTU5MTgwLCJleHAiOjE3NzA5NjAwODB9.SfBfhlsvQbTBD8JLmeZpzar0ZzD6S0YrB3u9hE1i2EM" http://localhost:3000/protected
+
+{"message":"Access granted","user":{"email":"lowbare3@gmail.com","sessionId":"hxvw7","iat":1770959180,"exp":1770960080},"success_flag":"FLAG-bG93YmFyZTNAZ21haWwuY29tX0NPTVBMRVRFRF9BU1NJR05NRU5U"}
